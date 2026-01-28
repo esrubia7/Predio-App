@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#1a2c5b">
+    <title>Predio LaCruz App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --azul: #1a2c5b;
+            --rojo: #e31e24;
+            --verde: #2d5016;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* HOME / PORTADA */
+        #page-home {
+            min-height: 100vh;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><rect fill="%234a9d2c" width="10" height="10"/></svg>');
+            background-size: cover;
+            background-position: center;
+            background-color: #4a9d2c;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        #page-home::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(26,44,91,0.7) 0%, rgba(26,44,91,0.3) 50%, rgba(26,44,91,0.7) 100%);
+        }
+
+        .home-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .home-logo {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 30px;
+            background: white;
+            border-radius: 50%;
+            padding: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .home-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .home-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5em;
+            color: white;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            letter-spacing: 1px;
+        }
+
+        .home-subtitle {
+            color: rgba(255,255,255,0.95);
+            font-size: 1.1em;
+            margin-bottom: 50px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            font-weight: 500;
+        }
+
+        .home-btn {
+            background: linear-gradient(135deg, var(--rojo) 0%, #ff4444 100%);
+            color: white;
+            padding: 18px 50px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 30px rgba(227,30,36,0.4);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .home-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* HEADER CON MENÚ */
+        header {
+            background: linear-gradient(135deg, var(--azul) 0%, #2d4a7c 100%);
+            padding: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 100;
+        }
+
+        .header-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-small {
+            width: 45px;
+            height: 45px;
+            background: white;
+            border-radius: 50%;
+            padding: 5px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .logo-small img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .header-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.3em;
+            color: white;
+            font-weight: 800;
+        }
+
+        /* MENÚ HAMBURGUESA */
+        .menu-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.15);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .menu-btn span {
+            width: 24px;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        .menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(7px, 7px);
+        }
+
+        .menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* MENÚ LATERAL */
+        .side-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 300px;
+            height: 100vh;
+            background: linear-gradient(180deg, var(--azul) 0%, #2d4a7c 100%);
+            box-shadow: -5px 0 20px rgba(0,0,0,0.3);
+            transition: right 0.3s ease;
+            z-index: 1000;
+            padding: 80px 0 20px;
+        }
+
+        .side-menu.open {
+            right: 0;
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 999;
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .menu-item {
+            padding: 18px 25px;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.05em;
+            font-weight: 600;
+            transition: all 0.3s;
+            border-left: 4px solid transparent;
+        }
+
+        .menu-item:active {
+            background: rgba(255,255,255,0.1);
+            border-left-color: var(--rojo);
+        }
+
+        .menu-item span {
+            font-size: 1.5em;
+        }
+
+        /* PÁGINAS */
+        .page {
+            display: none;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a2c5b 0%, #2d4a7c 50%, #1a2c5b 100%);
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .page-content {
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+
+        .card h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5em;
+            color: var(--azul);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        /* CAMPO DE FÚTBOL */
+        .field-container {
+            background: #2d5016;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.3), 0 4px 20px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .field-image-container {
+            position: relative;
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+
+        #fieldImage {
+            width: 100%;
+            height: auto;
+            display: block;
+            touch-action: none;
+        }
+
+        #fieldCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
+            touch-action: none;
+        }
+
+        .btn {
+            padding: 13px 18px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.85em;
+            cursor: pointer;
+            text-transform: uppercase;
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: transform 0.2s;
+            margin-bottom: 10px;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--azul) 0%, #2d4a7c 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--verde) 0%, #4a9d2c 100%);
+            color: white;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, var(--rojo) 0%, #ff4444 100%);
+            color: white;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 0.85em;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ecf0f1;
+            border-radius: 8px;
+            font-size: 0.9em;
+            font-family: 'Inter', sans-serif;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--azul);
+            box-shadow: 0 0 0 3px rgba(26,44,91,0.1);
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #e8f4fd 0%, #d3e9f8 100%);
+            border-left: 4px solid var(--azul);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            font-size: 0.8em;
+            line-height: 1.5;
+        }
+
+        .coords-display {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.75em;
+            color: var(--verde);
+            border: 2px solid rgba(45,80,22,0.2);
+            font-weight: 600;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .slider-value {
+            background: var(--azul);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.9em;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #ecf0f1;
+            outline: none;
+            border: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--rojo) 0%, #ff4444 100%);
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(227,30,36,0.4);
+        }
+
+        .riego-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .riego-item {
+            background: white;
+            border: 2px solid #ecf0f1;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            font-size: 0.8em;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .btn-group button {
+            flex: 1;
+            padding: 8px;
+            font-size: 0.75em;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #7f8c8d;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--azul) 0%, #2d4a7c 100%);
+            color: white;
+            padding: 18px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(26,44,91,0.3);
+        }
+
+        .stat-card h3 {
+            font-size: 2.2em;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            font-size: 0.7em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <!-- PÁGINA HOME -->
+    <div id="page-home" class="page active">
+        <div class="home-content">
+            <div class="home-logo">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle fill='%23ffffff' cx='100' cy='100' r='90' stroke='%231a2c5b' stroke-width='8'/%3E%3Cpath fill='%23e31e24' d='M70 60h60c10 0 15 5 15 15v10c0 10-5 15-15 15H90L70 120z'/%3E%3Cpath fill='%23e31e24' d='M70 80h40c8 0 12 4 12 12v8c0 8-4 12-12 12H70z'/%3E%3Ccircle fill='%23ffffff' cx='140' cy='110' r='12' stroke='%23000' stroke-width='2'/%3E%3Cpath fill='none' stroke='%23000' stroke-width='2' d='M147 117l8 8'/%3E%3Ctext x='100' y='145' text-anchor='middle' font-family='Arial Black' font-size='20' fill='%23000000'%3ELA CRUZ%3C/text%3E%3Ctext x='100' y='160' text-anchor='middle' font-family='Arial' font-size='12' fill='%2300a651'%3EPREDIO%3C/text%3E%3C/svg%3E" alt="Logo La Cruz">
+            </div>
+            <h1 class="home-title">Predio LaCruz</h1>
+            <p class="home-subtitle">Gestión Profesional de Césped</p>
+            <button class="home-btn" onclick="enterApp()">INGRESAR</button>
+        </div>
+    </div>
+
+    <!-- MENÚ OVERLAY -->
+    <div class="menu-overlay" onclick="toggleMenu()"></div>
+
+    <!-- MENÚ LATERAL -->
+    <div class="side-menu" id="sideMenu">
+        <a href="#" class="menu-item" onclick="goToPage('home')">
+            <span>🏠</span>
+            <div>Inicio</div>
+        </a>
+        <a href="#" class="menu-item" onclick="goToPage('riego')">
+            <span>🚿</span>
+            <div>Sistema de Riego GPS</div>
+        </a>
+        <a href="#" class="menu-item" onclick="goToPage('calendario')">
+            <span>📅</span>
+            <div>Calendario de Tareas</div>
+        </a>
+        <a href="#" class="menu-item" onclick="goToPage('fotos')">
+            <span>📸</span>
+            <div>Registro Fotográfico</div>
+        </a>
+        <a href="#" class="menu-item" onclick="goToPage('clima')">
+            <span>🌤️</span>
+            <div>Análisis Climático</div>
+        </a>
+        <a href="#" class="menu-item" onclick="goToPage('costos')">
+            <span>💰</span>
+            <div>Control de Costos</div>
+        </a>
+        <a href="#" class="menu-item" onclick="goToPage('informes')">
+            <span>📊</span>
+            <div>Informes</div>
+        </a>
+    </div>
+
+    <!-- PÁGINA: RIEGO -->
+    <div id="page-riego" class="page">
+        <header>
+            <div class="header-bar">
+                <div class="header-left">
+                    <div class="logo-small">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle fill='%23ffffff' cx='100' cy='100' r='90' stroke='%231a2c5b' stroke-width='8'/%3E%3Cpath fill='%23e31e24' d='M70 60h60c10 0 15 5 15 15v10c0 10-5 15-15 15H90L70 120z'/%3E%3Cpath fill='%23e31e24' d='M70 80h40c8 0 12 4 12 12v8c0 8-4 12-12 12H70z'/%3E%3Ccircle fill='%23ffffff' cx='140' cy='110' r='12' stroke='%23000' stroke-width='2'/%3E%3Cpath fill='none' stroke='%23000' stroke-width='2' d='M147 117l8 8'/%3E%3Ctext x='100' y='145' text-anchor='middle' font-family='Arial Black' font-size='20' fill='%23000000'%3ELA CRUZ%3C/text%3E%3Ctext x='100' y='160' text-anchor='middle' font-family='Arial' font-size='12' fill='%2300a651'%3EPREDIO%3C/text%3E%3C/svg%3E" alt="Logo">
+                    </div>
+                    <div class="header-title">Riego GPS</div>
+                </div>
+                <button class="menu-btn" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </header>
+
+        <div class="page-content">
+            <div class="card">
+                <h2>🚿 Sistema de Riego GPS</h2>
+                
+                <div class="info-box">
+                    <strong>📍 Instrucciones:</strong> Toca sobre la imagen del campo para marcar la posición del aspersor. Ajusta el radio de cobertura y registra el riego.
+                </div>
+
+                <div class="field-container">
+                    <div class="field-image-container">
+                        <img id="fieldImage" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='1200' viewBox='0 0 800 1200'%3E%3Crect fill='%234a9d2c' width='800' height='1200'/%3E%3Cpath stroke='%23fff' stroke-width='3' fill='none' d='M20 20h760v1160H20z M20 600h760 M400 600m-120 0a120 120 0 1 0 240 0a120 120 0 1 0 -240 0 M150 20h500v220H150z M150 1180h500V960H150z M250 20h300v120H250z M250 1180h300v-120H250z M400 155a5 5 0 1 0 0 1z M400 1045a5 5 0 1 0 0 1z M100 20a30 30 0 0 1 30 30 M670 20a30 30 0 0 0 30 30 M100 1180a30 30 0 0 0 30 -30 M670 1180a30 30 0 0 1 30 -30'/%3E%3C/svg%3E" alt="Campo">
+                        <canvas id="fieldCanvas"></canvas>
+                    </div>
+
+                    <div style="margin-top: 15px;">
+                        <button class="btn btn-secondary" onclick="getCurrentLocation()">📍 Obtener GPS</button>
+                        
+                        <div style="margin: 15px 0;">
+                            <div class="slider-label">
+                                <label>Radio de Cobertura:</label>
+                                <span class="slider-value" id="radiusValue">15m</span>
+                            </div>
+                            <input type="range" id="coverageRadius" min="5" max="40" value="15" oninput="updateRadius(this.value)">
+                        </div>
+                        
+                        <button class="btn btn-danger" onclick="clearField()">🗑️ Limpiar</button>
+                    </div>
+
+                    <div class="coords-display" id="coordsDisplay">
+                        ⏳ Toca sobre el campo o usa GPS...
+                    </div>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <h3 style="margin-bottom: 15px; font-size: 1.1em; color: #2c3e50; font-weight: 700;">Registrar Riego</h3>
+                    <div class="form-group">
+                        <label>📅 Fecha y Hora:</label>
+                        <input type="datetime-local" id="riegoFecha">
+                    </div>
+                    <div class="form-group">
+                        <label>⏱️ Duración (min):</label>
+                        <input type="number" id="riegoDuracion" min="1" value="30">
+                    </div>
+                    <div class="form-group">
+                        <label>🔧 Presión (bar):</label>
+                        <input type="number" id="riegoPresion" step="0.1" value="3.5">
+                    </div>
+                    <div class="form-group">
+                        <label>💦 Caudal (L/min):</label>
+                        <input type="number" id="riegoCaudal" value="800">
+                    </div>
+                    <div class="form-group">
+                        <label>📝 Notas:</label>
+                        <textarea id="riegoNotas" rows="2" placeholder="Observaciones..."></textarea>
+                    </div>
+                    <button class="btn btn-primary" onclick="registrarRiego()">✅ Registrar Riego</button>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <h3 style="margin-bottom: 15px; font-size: 1.1em; color: #2c3e50; font-weight: 700;">Historial de Riegos</h3>
+                    <div class="riego-list" id="riegoList">
+                        <div class="empty-state">No hay riegos registrados</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PÁGINA: CALENDARIO -->
+    <div id="page-calendario" class="page">
+        <header>
+            <div class="header-bar">
+                <div class="header-left">
+                    <div class="logo-small">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle fill='%23ffffff' cx='100' cy='100' r='90' stroke='%231a2c5b' stroke-width='8'/%3E%3Cpath fill='%23e31e24' d='M70 60h60c10 0 15 5 15 15v10c0 10-5 15-15 15H90L70 120z'/%3E%3Cpath fill='%23e31e24' d='M70 80h40c8 0 12 4 12 12v8c0 8-4 12-12 12H70z'/%3E%3Ccircle fill='%23ffffff' cx='140' cy='110' r='12' stroke='%23000' stroke-width='2'/%3E%3Cpath fill='none' stroke='%23000' stroke-width='2' d='M147 117l8 8'/%3E%3Ctext x='100' y='145' text-anchor='middle' font-family='Arial Black' font-size='20' fill='%23000000'%3ELA CRUZ%3C/text%3E%3Ctext x='100' y='160' text-anchor='middle' font-family='Arial' font-size='12' fill='%2300a651'%3EPREDIO%3C/text%3E%3C/svg%3E" alt="Logo">
+                    </div>
+                    <div class="header-title">Calendario</div>
+                </div>
+                <button class="menu-btn" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </header>
+
+        <div class="page-content">
+            <div class="card">
+                <h2>📅 Calendario de Tareas</h2>
+                <div class="empty-state">Sección en construcción</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PÁGINA: FOTOS -->
+    <div id="page-fotos" class="page">
+        <header>
+            <div class="header-bar">
+                <div class="header-left">
+                    <div class="logo-small">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle fill='%23ffffff' cx='100' cy='100' r='90' stroke='%231a2c5b' stroke-width='8'/%3E%3Cpath fill='%23e31e24' d='M70 60h60c10 0 15 5 15 15v10c0 10-5 15-15 15H90L70 120z'/%3E%3Cpath fill='%23e31e24' d='M70 80h40c8 0 12 4 12 12v8c0 8-4 12-12 12H70z'/%3E%3Ccircle fill='%23ffffff' cx='140' cy='110' r='12' stroke='%23000' stroke-width='2'/%3E%3Cpath fill='none' stroke='%23000' stroke-width='2' d='M147 117l8 8'/%3E%3Ctext x='100' y='145' text-anchor='middle' font-family='Arial Black' font-size='20' fill='%23000000'%3ELA CRUZ%3C/text%3E%3Ctext x='100' y='160' text-anchor='middle' font-family='Arial' font-size='12' fill='%2300a651'%3EPREDIO%3C/text%3E%3C/svg%3E" alt="Logo">
+                    </div>
+                    <div class="header-title">Fotos</div>
+                </div>
+                <button class="menu-btn" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </header>
+
+        <div class="page-content">
+            <div class="card">
+                <h2>📸 Registro Fotográfico</h2>
+                <div class="empty-state">Sección en construcción</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PÁGINA: CLIMA -->
+    <div id="page-clima" class="page">
+        <header>
+            <div class="header-bar">
+                <div class="header-left">
+                    <div class="logo-small">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle fill='%23ffffff' cx='100' cy='100' r='90' stroke='%231a2c5b' stroke-width='8'/%3E%3Cpath fill='%23e31e24' d='M70 60h60c10 0 15 5 15 15v10c0 10-5 15-15 15H90L70 120z'/%3E%3Cpath fill='%23e31e24' d='M70 80h40c8 0 12 4 12 12v8c0 8-4 12-12 12H70z'/%3E%3Ccircle fill='%23ffffff' cx='140' cy='110' r='12' stroke='%23000' stroke-width='2'/%3E%3Cpath fill='none' stroke='%23000' stroke-width='2' d='M147 117l8 8'/%3E%3Ctext x='100' y='145' text-anchor='middle' font-family='Arial Black' font-size='20' fill='%23000000'%3ELA CRUZ%3C/text%3E%3Ctext x='100' y='160' text-anchor='middle' font-family='Arial' font-size='12' fill='%2300a651'%3EPREDIO%3C/text%3E%3C/svg%3E" alt="Logo">
+                    </div>
+                    <div class="header-title">Clima</div>
+                </div>
+                <button class="menu-btn" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </header>
+
+        <div class="page-content">
+            <div class="card">
+                <h2>🌤️ Análisis Climático</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>24°C</h3>
+                        <p>Temperatura</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>65%</h3>
+                        <p>Humedad</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PÁGINA: COSTOS -->
+    <div id="page-costos" class="page">
+        <header>
+            <div class="header-bar">
+                <div class="header-left">
+                    <div class="logo-small">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle fill='%23ffffff' cx='100' cy='100' r='90' stroke='%231a2c5b' stroke-width='8'/%3E%3Cpath fill='%23e31e24' d='M70 60h60c10 0 15 5 15 15v10c0 10-5 15-15 15H90L70 120z'/%3E%3Cpath fill='%23e31e24' d='M70 80h40c8 0 12 4 12 12v8c0 8-4 12-12 12H70z'/%3E%3Ccircle fill='%23ffffff' cx='140' cy='110' r='12' stroke='%23000' stroke-width='2'/%3E%3Cpath fill='none' stroke='%23000' stroke-width='2' d='M147 117l8 8'/%3E%3Ctext x='100' y='145' text-anchor='middle' font-family='Arial Black' font-size='20' fill='%23000000'%3ELA CRUZ%3C/text%3E%3Ctext x='100' y='160' text-anchor='middle' font-family='Arial' font-size='12' fill='%2300a651'%3EPREDIO%3C/text%3E%3C/svg%3E" alt="Logo">
+                    </div>
+                    <div class="header-title">Costos</div>
+                </div>
+                <button class="menu-btn" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </header>
+
+        <div class="page-content">
+            <div class="card">
+                <h2>💰 Control de Costos</h2>
+                <div class="empty-state">Sección en construcción</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PÁGINA: INFORMES -->
+    <div id="page-informes" class="page">
+        <header>
+            <div class="header-bar">
+                <div class="header-left">
+                    <div class="logo-small">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle fill='%23ffffff' cx='100' cy='100' r='90' stroke='%231a2c5b' stroke-width='8'/%3E%3Cpath fill='%23e31e24' d='M70 60h60c10 0 15 5 15 15v10c0 10-5 15-15 15H90L70 120z'/%3E%3Cpath fill='%23e31e24' d='M70 80h40c8 0 12 4 12 12v8c0 8-4 12-12 12H70z'/%3E%3Ccircle fill='%23ffffff' cx='140' cy='110' r='12' stroke='%23000' stroke-width='2'/%3E%3Cpath fill='none' stroke='%23000' stroke-width='2' d='M147 117l8 8'/%3E%3Ctext x='100' y='145' text-anchor='middle' font-family='Arial Black' font-size='20' fill='%23000000'%3ELA CRUZ%3C/text%3E%3Ctext x='100' y='160' text-anchor='middle' font-family='Arial' font-size='12' fill='%2300a651'%3EPREDIO%3C/text%3E%3C/svg%3E" alt="Logo">
+                    </div>
+                    <div class="header-title">Informes</div>
+                </div>
+                <button class="menu-btn" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </header>
+
+        <div class="page-content">
+            <div class="card">
+                <h2>📊 Informes y Estadísticas</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3 id="statRiegos">0</h3>
+                        <p>Riegos</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="statAgua">0 L</h3>
+                        <p>Agua Usada</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let canvas, ctx;
+        let currentGPS = null;
+        let sprinklerPosition = null;
+        let coverageRadius = 15;
+        let irrigationAreas = [];
+        let riegos = [];
+
+        // Inicializar canvas
+        function initCanvas() {
+            canvas = document.getElementById('fieldCanvas');
+            const img = document.getElementById('fieldImage');
+            canvas.width = img.offsetWidth;
+            canvas.height = img.offsetHeight;
+            ctx = canvas.getContext('2d');
+
+            canvas.addEventListener('touchstart', handleTouch, { passive: false });
+            canvas.addEventListener('click', handleClick);
+
+            drawMarkers();
+        }
+
+        function handleTouch(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            const x = touch.clientX - rect.left;
+            const y = touch.clientY - rect.top;
+            markPosition(x, y);
+        }
+
+        function handleClick(e) {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            markPosition(x, y);
+        }
+
+        function markPosition(x, y) {
+            sprinklerPosition = { x, y };
+            
+            const fieldX = (x / canvas.width) * 68;
+            const fieldY = (y / canvas.height) * 105;
+
+            document.getElementById('coordsDisplay').innerHTML = `
+                <strong>📍 Posición Marcada:</strong><br>
+                Campo: X=${fieldX.toFixed(1)}m, Y=${fieldY.toFixed(1)}m<br>
+                ${currentGPS ? `GPS: ${currentGPS.lat.toFixed(6)}°, ${currentGPS.lon.toFixed(6)}°` : '⚠️ Sin GPS'}
+            `;
+
+            drawMarkers();
+        }
+
+        function drawMarkers() {
+            if (!ctx) return;
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const scale = canvas.width / 68;
+
+            // Dibujar áreas de riego anteriores
+            irrigationAreas.forEach(area => {
+                const radiusPx = area.radius * scale;
+                ctx.fillStyle = 'rgba(33, 150, 243, 0.25)';
+                ctx.beginPath();
+                ctx.arc(area.x, area.y, radiusPx, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            // Dibujar posición actual
+            if (sprinklerPosition) {
+                const radiusPx = coverageRadius * scale;
+                ctx.fillStyle = 'rgba(33, 150, 243, 0.4)';
+                ctx.beginPath();
+                ctx.arc(sprinklerPosition.x, sprinklerPosition.y, radiusPx, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Marcador
+                ctx.fillStyle = '#ff0000';
+                ctx.shadowColor = 'rgba(0,0,0,0.5)';
+                ctx.shadowBlur = 10;
+                ctx.beginPath();
+                ctx.arc(sprinklerPosition.x, sprinklerPosition.y, 8, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.shadowBlur = 0;
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.arc(sprinklerPosition.x, sprinklerPosition.y, 12, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+        }
+
+        function updateRadius(value) {
+            coverageRadius = parseInt(value);
+            document.getElementById('radiusValue').textContent = value + 'm';
+            if (sprinklerPosition) drawMarkers();
+        }
+
+        function clearField() {
+            if (!confirm('¿Limpiar marcas?')) return;
+            sprinklerPosition = null;
+            irrigationAreas = [];
+            document.getElementById('coordsDisplay').innerHTML = '⏳ Toca sobre el campo o usa GPS...';
+            drawMarkers();
+        }
+
+        function getCurrentLocation() {
+            if (!navigator.geolocation) {
+                alert('❌ GPS no disponible');
+                return;
+            }
+
+            const btn = event.target;
+            btn.disabled = true;
+            btn.textContent = '⏳ Obteniendo...';
+
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    currentGPS = {
+                        lat: position.coords.latitude,
+                        lon: position.coords.longitude,
+                        accuracy: position.coords.accuracy
+                    };
+
+                    document.getElementById('coordsDisplay').innerHTML = `
+                        <strong>✅ GPS Capturado</strong><br>
+                        ${currentGPS.lat.toFixed(6)}°, ${currentGPS.lon.toFixed(6)}°<br>
+                        Precisión: ±${currentGPS.accuracy.toFixed(0)}m
+                    `;
+
+                    btn.disabled = false;
+                    btn.textContent = '✅ GPS OK';
+                    setTimeout(() => btn.textContent = '📍 Obtener GPS', 3000);
+                },
+                (error) => {
+                    alert('❌ Error GPS');
+                    btn.disabled = false;
+                    btn.textContent = '📍 Obtener GPS';
+                },
+                { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+            );
+        }
+
+        function registrarRiego() {
+            if (!sprinklerPosition) {
+                alert('❌ Marca la posición del aspersor');
+                return;
+            }
+
+            const fieldX = (sprinklerPosition.x / canvas.width) * 68;
+            const fieldY = (sprinklerPosition.y / canvas.height) * 105;
+
+            const riego = {
+                id: Date.now(),
+                fecha: document.getElementById('riegoFecha').value,
+                duracion: document.getElementById('riegoDuracion').value,
+                presion: document.getElementById('riegoPresion').value,
+                caudal: document.getElementById('riegoCaudal').value,
+                notas: document.getElementById('riegoNotas').value,
+                posicion: {
+                    x: sprinklerPosition.x,
+                    y: sprinklerPosition.y,
+                    fieldX: fieldX.toFixed(2),
+                    fieldY: fieldY.toFixed(2)
+                },
+                gps: currentGPS,
+                radio: coverageRadius,
+                consumo: parseInt(document.getElementById('riegoDuracion').value) * parseInt(document.getElementById('riegoCaudal').value)
+            };
+
+            riegos.push(riego);
+            irrigationAreas.push({ x: sprinklerPosition.x, y: sprinklerPosition.y, radius: coverageRadius });
+
+            saveData();
+            renderRiegos();
+            updateStats();
+
+            document.getElementById('riegoNotas').value = '';
+            sprinklerPosition = null;
+            currentGPS = null;
+            drawMarkers();
+
+            alert('✅ Riego registrado');
+        }
+
+        function renderRiegos() {
+            const list = document.getElementById('riegoList');
+            if (riegos.length === 0) {
+                list.innerHTML = '<div class="empty-state">No hay riegos</div>';
+                return;
+            }
+
+            list.innerHTML = riegos.map(r => `
+                <div class="riego-item">
+                    <strong>📅 ${new Date(r.fecha).toLocaleString('es', {dateStyle: 'short', timeStyle: 'short'})}</strong><br>
+                    📍 X=${r.posicion.fieldX}m, Y=${r.posicion.fieldY}m | ⭕ ${r.radio}m<br>
+                    ⏱️ ${r.duracion}min | 💧 ${r.consumo.toLocaleString()}L<br>
+                    ${r.notas ? `📝 ${r.notas}<br>` : ''}
+                    <div class="btn-group">
+                        <button onclick="eliminarRiego(${r.id})" class="btn btn-danger">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function eliminarRiego(id) {
+            if (!confirm('¿Eliminar?')) return;
+            const idx = riegos.findIndex(r => r.id === id);
+            if (idx > -1) {
+                riegos.splice(idx, 1);
+                irrigationAreas.splice(idx, 1);
+                saveData();
+                renderRiegos();
+                updateStats();
+                drawMarkers();
+            }
+        }
+
+        function updateStats() {
+            document.getElementById('statRiegos').textContent = riegos.length;
+            const total = riegos.reduce((sum, r) => sum + r.consumo, 0);
+            document.getElementById('statAgua').textContent = total.toLocaleString() + ' L';
+        }
+
+        function saveData() {
+            try {
+                localStorage.setItem('lacruz_riegos', JSON.stringify(riegos));
+                localStorage.setItem('lacruz_areas', JSON.stringify(irrigationAreas));
+            } catch (e) {}
+        }
+
+        function loadData() {
+            try {
+                const r = localStorage.getItem('lacruz_riegos');
+                const a = localStorage.getItem('lacruz_areas');
+                if (r) riegos = JSON.parse(r);
+                if (a) irrigationAreas = JSON.parse(a);
+                renderRiegos();
+                updateStats();
+                drawMarkers();
+            } catch (e) {}
+        }
+
+        // Navegación
+        function enterApp() {
+            goToPage('riego');
+        }
+
+        function goToPage(pageName) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page-' + pageName).classList.add('active');
+            toggleMenu();
+            
+            if (pageName === 'riego') {
+                setTimeout(() => {
+                    initCanvas();
+                    loadData();
+                    document.getElementById('riegoFecha').value = new Date().toISOString().slice(0, 16);
+                }, 100);
+            }
+        }
+
+        function toggleMenu() {
+            const menu = document.getElementById('sideMenu');
+            const overlay = document.querySelector('.menu-overlay');
+            const btn = document.querySelector('.menu-btn');
+            
+            menu.classList.toggle('open');
+            overlay.classList.toggle('active');
+            btn.classList.toggle('active');
+        }
+
+        // Inicializar fecha
+        window.onload = () => {
+            document.getElementById('riegoFecha').value = new Date().toISOString().slice(0, 16);
+        };
+    </script>
+</body>
+</html>
